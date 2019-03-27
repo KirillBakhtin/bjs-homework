@@ -14,6 +14,7 @@ function getResult(a,b,c){
     let D = Math.pow(b, 2) - 4 * a * c;
     if (D < 0) {
         console.log("Корней нет");
+        return null;
     } else if (D == 0) {
         let x = (-b + Math.sqrt(D)) / 2 * a;
         console.log(x);
@@ -38,39 +39,34 @@ function askDrink(name,dateOfBirthday){
     let todaysYear = today.getFullYear();
     let yearOfBirthday = dateOfBirthday.getFullYear();
     
+    let checkResult;
+
     if(todaysYear - yearOfBirthday >= 18) {
-        let checkResult = `Не желаете ли олд-фэшн, ${name}?`;
-        console.log(checkResult);
-        return checkResult; 
+        checkResult = `Не желаете ли олд-фэшн, ${name}?`; 
     } else {
-        let checkResult = `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`
-        console.log(checkResult);
-        return checkResult;
-    }
+        checkResult = `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`
+    };
+    
+    console.log(checkResult);
+    return checkResult; 
 }
 
 function calculateAverageRating(){
-    let marks = window.marks.value.split("").map(Number);
+    /*let marks = window.marks.value.split("").map(Number);*/
+    let marks = window.marks.value.split("").map(Number).filter((n)=> !isNaN(n) && n>0);
     let averageMark = getAverageMark(marks);
     window.averageMark.textContent = averageMark;
 }
 
-function getAverageMark(marks){
-    if (marks.length / 2 > 5) {
+function getAverageMark(marks) {
+    if (marks.length > 5) {
+        marks.splice(5);
         console.log("Вы ввели более пяти оценок, расчет среднего балла будет производиться по первым пяти оценкам");
-        marks.length = 10;
-        let sum = 0;
-        for (let i = 0; i < marks.length; i += 2) {
-            sum += marks[i];
-        };
-        let averageMark = sum / (Math.ceil(marks.length / 2));
-        return averageMark;
-    } else {
-        let sum = 0;
-        for (let i = 0; i < marks.length; i += 2) {
-            sum += marks[i];
-        };
-         let averageMark = sum / (Math.ceil(marks.length / 2));
-        return averageMark;
-    }
+    };
+    let sum = 0;
+    for (let i = 0; i < marks.length; i++) {
+        sum += marks[i];
+    };
+    let averageMark = sum / marks.length;
+    return averageMark; 
 }
