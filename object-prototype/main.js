@@ -67,7 +67,6 @@ function getAverageMark(marks) {
     for (let mark of marks) {
         let markNumber = parseInt(mark);
         sum += markNumber;
-        console.log(sum);
         marksCounter++;
     }; 
     
