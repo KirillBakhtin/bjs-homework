@@ -7,8 +7,30 @@ function initCheckBirthday() {
 }
 
 function checkBirthday(birthday) {
-    // код для задачи №1 писать здесь
-}
+    let curr = new Date ();
+    let now = +curr;
+    let currYear = curr.getFullYear();
+
+    let birthdayDate = new Date (birthday);
+    birthday = +birthdayDate;
+
+    let birthdayYear = birthdayDate.getFullYear();
+    let diff = now - birthday;
+
+
+    for (let i = birthdayYear; i <= currYear; i++) {
+        if (i % 4 == 0) {
+            diff -= 86400000 //количество миллисекунд в сутках, вычитаю их из каждого високосного года
+        }
+    }ж
+
+    let age = diff / 31536000000; // количество миллисекунд в году
+    
+    if (age >= 18) {
+        return age
+    }
+    
+};
 
 function initPrintAnimalSound() {
     const animal = {
@@ -21,7 +43,12 @@ function initPrintAnimalSound() {
 }
 
 function getAnimalSound(animal) {
-    // код для задачи №2 писать здесь
+    let sound = animal.sound;
+    if (animal == "undefined") { 
+        return Null
+    } else {
+        return sound
+    }
 }
 
 function initCalculateStatement() {
@@ -35,5 +62,19 @@ function initCalculateStatement() {
 }
 
 function getAverageMark(marks) {
-    // код для задачи №3 писать здесь
+    let sum = 0;
+    let marksCounter = 0;
+    for (let mark of marks) {
+        let markNumber = parseInt(mark);
+        sum += markNumber;
+        console.log(sum);
+        marksCounter++;
+    }; 
+    
+    let average = sum / marksCounter;
+    let roundedAverage = Math.round(average);
+
+    console.log(roundedAverage);
+    return roundedAverage;
+
 }
