@@ -1,12 +1,14 @@
 "use stict"
 
+
+//Задание 1
 class Weapon {
-    constructor (name, attack, durability, range, originDurability) {
+    constructor (name, attack, durability, range) {
         this.name = name;
         this.attack = attack;
         this.durability = durability;
         this.range = range;
-        this.originDurability = originDurability;
+        this.originDurability = durability;
     };
 
     takeDamage(damage) {
@@ -29,11 +31,7 @@ class Weapon {
     };
 
     isBroken() {
-        if (this.durability > 0) {
-            return false
-        } else {
-            return true
-        }
+        return Boolean(!this.durability);
     }
 };
 
@@ -44,7 +42,7 @@ const arm = new Weapon ('Рука', 1, Infinity, 1, Infinity);
 const bow = new Weapon ('Лук', 10, 200, 3, 200);
 
 const longBow = new Weapon ('Длинный лук', 15, bow.durability, 4, bow.durability);
-const ax = new Weapon ('Секира', 27, 800, sword.range, 800);
+const axe = new Weapon ('Секира', 27, 800, sword.range, 800);
 const stormStaff = new Weapon ('Посох Бури', 10, staff.durability, 3, staff.durability);
 
 
@@ -79,6 +77,8 @@ console.log(arm.isBroken());
 knife.takeDamage(200);
 console.log(knife.getDamage());
 
+
+//Задание 2
 class Arm extends Weapon {
     constructor () {
         super('Рука', 1, Infinity, 1, Infinity);
@@ -110,17 +110,17 @@ class Staff extends Weapon {
 }
 
 class LongBow extends Bow {
-    constructor() {
-        super(200);
+    constructor(durability) {
+        super(durability);
         this.name = 'Длинный лук';
         this.attack = 15;
         this.range = 4;
     }
 };
 
-class Ax extends Sword {
-    constructor() {
-        super(500);
+class Axe extends Sword {
+    constructor(durability) {
+        super(durability);
         this.name = 'Секира';
         this.attack = 27;
         this.durability = 800;
@@ -129,8 +129,8 @@ class Ax extends Sword {
 }
 
 class StormStaff extends Staff {
-    constructor() {
-        super(300);
+    constructor(durability) {
+        super(durability);
         this.name = 'Посох Бури';
         this.attack = 10;
         this.range = 3;
@@ -144,8 +144,8 @@ console.log(arm1);
 
 const longBow1 = new LongBow();
 console.log(longBow1); 
-const ax1 = new Ax();
-console.log(ax1);
+const axe1 = new Axe();
+console.log(axe1);
 const stormStaff1 = new StormStaff();
 console.log(stormStaff1);
 
@@ -155,12 +155,89 @@ console.log(longBow1.getDamage());
 console.log(longBow1.isBroken());
 
 
-ax1.takeDamage(400);
-console.log(ax1.durability);
-console.log(ax1.getDamage());
-console.log(ax1.isBroken());
+axe1.takeDamage(400);
+console.log(axe1.durability);
+console.log(axe1.getDamage());
+console.log(axe1.isBroken());
 
 stormStaff1.takeDamage(230);
 console.log(stormStaff1.durability);
 console.log(stormStaff1.getDamage());
 console.log(stormStaff1.isBroken());
+
+
+//Задание 3
+
+class StudentLog {
+    constructor (name) {
+        this.name = name;
+        this.grades = {};
+    };
+
+    getName() {
+        return this.name;
+    };
+
+    addGrade(grade, subject) {
+        if (this.grades[subject] === undefined) {
+            this.grades[subject] = [];
+        };
+
+        if (grade > 1 || grade < 5) {
+            this.grades[subject].push(grade);
+        } else {
+            console.log(`Вы пытались поставить оценку ${grade} по предменту ${subject}, допускаются только числа от 1 до 5`);
+        };
+
+        return (this.grades[subject].length);
+    };
+
+    getAverageBySubject (subject) {
+        if (this.grades[subject] === undefined || this.grades[subject] == 0) {
+            return `По предмету ${subject} оценок нет`
+        };
+
+        let sum = 0;
+
+        for (let grade in this.grades[subject]) {
+            sum += this.grades[subject][grade];
+        };
+
+        const averageBySubject = sum / this.grades[subject].length;
+
+        return `Средняя оценка по предмету ${subject} равна ${averageBySubject}`;
+    };
+
+    getTotalAverage () {
+        let totalSum = 0;
+        let countGrades = 0;
+
+        for (let subject in this.grades) {
+            for (let grade in this.grades[subject]) {
+                totalSum += this.grades[subject][grade];
+                countGrades ++;
+            }
+        };
+
+        if (totalSum === 0 || countGrades === 0) {
+            return `Ни по одному из предметов нет оценко`;
+        }
+    }
+};
+
+const log = new StudentLog('Олег Никифоров');
+
+console.log(log.getName());
+
+console.log(log.addGrade(2, 'algebra'));
+console.log(log.addGrade(6, 'algebra'));
+console.log(log.addGrade('Отлично!', 'algebra'));
+console.log(log.addGrade(4, 'algebra'));
+console.log(log.addGrade(5, 'geometry'));
+console.log(log.addGrade(4, 'geometry'));
+
+console.log(log.getAverageBySubject('geometry'));
+console.log(log.getAverageBySubject('algebra'));
+console.log(log.getAverageBySubject('math'));
+
+console.log(log.getTotalAverage());
