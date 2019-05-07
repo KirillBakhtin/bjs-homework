@@ -7,14 +7,14 @@ function initCheckBirthday() {
 }
 
 function checkBirthday(birthday) {
-    let curr = new Date ();
-    let now = +curr;
-    let currYear = curr.getFullYear();
+    const curr = new Date ();
+    const now = +curr;
+    const currYear = curr.getFullYear();
 
-    let birthdayDate = new Date (birthday);
+    const birthdayDate = new Date (birthday);
     birthday = +birthdayDate;
 
-    let birthdayYear = birthdayDate.getFullYear();
+    const birthdayYear = birthdayDate.getFullYear();
     let diff = now - birthday;
 
 
@@ -24,7 +24,7 @@ function checkBirthday(birthday) {
         }
     };
 
-    let age = diff / 31536000000; // количество миллисекунд в году
+    const age = diff / 31536000000; // количество миллисекунд в году
     
     if (age >= 18) {
         return age
